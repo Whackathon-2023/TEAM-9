@@ -78,7 +78,8 @@ if __name__ == "__main__":
     for file in file_list:
         source_file = file.filepath
 
-        destination_file = f'destination{count}.jpg'  # 目标文件路径
+        date_time = file.timestamp.strftime("%Y-%m-%d-%H-%M_")
+        destination_file = f'{date_time}destination{count}.jpg'  # 目标文件路径
 
         # 使用 shutil.copy() 拷贝文件
         shutil.copy(source_file, destination_file)
