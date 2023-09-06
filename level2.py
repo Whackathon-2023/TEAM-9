@@ -2,7 +2,7 @@ import os
 import re
 from datetime import datetime
 import shutil
-
+from globalVar import *
 
 folder_path = "./userdata"
 
@@ -31,40 +31,20 @@ def extract_r(folder_path ,file_list):
         for folder in subfolders:
             extract_r(folder_path +'/' + folder, file_list)
         break
-
-# def extract_r(folder_path ,file_list):
-#     items = os.listdir(folder_path)
-#     dirs = []
-#     files = []
-#     for item in items:
-#         item_path = os.path.join(folder_path, item)
-#         if os.path.isdir(item_path):
-#             dirs.append(item_path)
-            
-#         else:
-#             myfile = File()
-#             myfile.filepath = item_path
-#             file_list.append(myfile)
-
-#         extract_r(item_path, file_list)
         
-
 def extract_files_from_folder(folder_path):
     file_list = []
     extract_r(folder_path, file_list)
     return file_list
-    
-def make_time_stamp(file_list):
-    pass
-      
   
 
 if __name__ == "__main__":
     file_list = extract_files_from_folder(folder_path)
     
     #use regular expression to get the timestamp
-    #regular = r'(\d{4})(\\|\/)(\d+)(\\|\/)(\d+)(\\|\/)(\d+)-(\d+)'
     pattern = r'[/\\](\d+)[/\\](\d+)[/\\](\d+)[/\\](\d+)[-\\](\d+)'
+
+    outputDir = g_file_dir
 
     for file in file_list:
         match = re.search(pattern, file.filepath)
@@ -75,16 +55,18 @@ if __name__ == "__main__":
           file.timestamp = datetime(year, month, day, hour, minutes)
 
     count = 1
+    writer = open(f"{outputDir}/time.txt","w")
     for file in file_list:
         source_file = file.filepath
 
-        date_time = file.timestamp.strftime("%Y-%m-%d-%H-%M_")
-        destination_file = f'{date_time}destination{count}.jpg'  # 目标文件路径
+        date_time = file.timestamp.strftime("%Y-%m-%d-%H-%M")
+        destination_file = f'{outputDir}/destination{count}.jpg'  # target file path
+        writer.write(f"{date_time}_1\n")
 
-        # 使用 shutil.copy() 拷贝文件
+        #copy to 
         shutil.copy(source_file, destination_file)
-
         count +=1 
 
+    writer.close()
     print("done")
     
