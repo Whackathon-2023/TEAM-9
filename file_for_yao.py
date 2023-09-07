@@ -16,7 +16,7 @@ tf.__version__
 
 trained_model = load_model('model/blur/blur_detect.h5') 
 glareCNN = tf.keras.models.load_model('model/glare/glare_detect.h5')
-source_dir = "C:\\Users\\trade\\OneDrive\\Documents\\GitHub\\pretrained-image-quality-cnn\\all_images\\"
+source_dir = "data2/"
 
 buffr_blur = []
 score_blur = []
