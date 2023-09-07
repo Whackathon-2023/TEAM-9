@@ -90,11 +90,7 @@ def select_and_make_video(file_dir, start_time, end_time):
 
 
 if __name__ == "__main__":
-    start_time = datetime(2022, 1, 30, 0, 0)
-    end_time = datetime(2022, 2, 2, 12, 20)
-    file_dir = g_file_dir
-    #start_index, end_index = select_files(file_dir, start_time, end_time)
-    select_and_make_video(file_dir, start_time, end_time)
+    select_and_make_video(g_file_dir, g_start_time, g_end_time)
     print("done")
     
     

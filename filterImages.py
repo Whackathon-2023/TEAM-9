@@ -17,6 +17,19 @@ def filter_files(target_line_numbers, replace_file):
             print(new_line, end='')
     os.remove(f"{filename}.bak")
 
+#input are two list
+def transform_to_rows(names, pred_blur):
+    rows = []
+    length = len(names)
+    assert(length == len(pred_blur))
+    siz = len("destination")
+    for i in range(length):
+        rowNo = int(names[i][siz :])
+        if(pred_blur[i] == "blur"):
+            rows.append(rowNo-1)
+    return rows
+
+
 if __name__ == "__main__":
     filter_files(g_rows, f"{g_file_dir}/time.txt")
     print("done")
