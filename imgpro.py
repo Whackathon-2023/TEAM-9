@@ -1,10 +1,10 @@
 import subprocess
 
-input_rate = "1/5"
-output_rate = "30"
-video_name = "out.mp4"
+from globalVar import *
 
-ffmpeg_command = f"ffmpeg -r {input_rate} -start_number 1 -i ./data/img%d.jpg -c:v libx264 -r {output_rate} -pix_fmt yuv420p {video_name}"
+image_prefix = f"{g_file_dir}/destination%d.jpg"
+
+ffmpeg_command = f"ffmpeg -r {g_input_rate} -start_number 1 -i ./data/img%d.jpg -c:v libx264 -r {g_output_rate} -pix_fmt yuv420p {g_video_name}"
 print(ffmpeg_command)
 input("go?")
 subprocess.run(ffmpeg_command)

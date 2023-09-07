@@ -77,6 +77,7 @@ def select_and_make_video(file_dir, start_time, end_time):
         for image in image_list:
             writer.write(f"file '{image}'\n")
     ffmpeg_command = f"ffmpeg -r {g_input_rate} -f concat -safe 0 -i {read_list_file} -c:v libx264 -r {g_output_rate} -pix_fmt yuv420p -frames:v {frame_count * g_frame_count_weight} {g_video_name}"
+    
     # for image in image_list:
     #     os.symlink(image, f"{g_file_dir}/link{count}.jpg.lnk")
     #     count += 1

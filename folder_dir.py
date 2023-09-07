@@ -2,7 +2,8 @@ import os
 import re
 from datetime import datetime
 
-folder_path = "./Problem06_Still_No_Longer/TEAM-9/userdata"
+#folder_path = "./Problem06_Still_No_Longer/TEAM-9/userdata"
+folder_path = "./userdata"
 
 class File:
     def __init__(self):

@@ -8,3 +8,6 @@ g_video_name = "video.mp4"
 
 g_frame_count_weight = 10
 
+#bad quality images
+g_rows = []
+
