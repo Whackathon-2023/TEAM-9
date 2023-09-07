@@ -7,7 +7,7 @@ from tktimepicker import SpinTimePickerOld
 from globalVar import *
 from readdir import *
 from tktimepicker import constants
-import generate
+from generate import *
 #from tkVideoPlayer import TkinterVideo
 
 # ->directory for images
@@ -79,13 +79,18 @@ class ImageGUI:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------       
 	# Section to handle threshold slider and process video button 
 
-		# ->Create a slider to adjust the threshold
-		self.threshold = tk.IntVar()
-		self.threshold_scale = tk.Scale(self.button_frame3, from_=0.01, to=1.00, digits = 3, resolution = 0.01, orient=tk.HORIZONTAL, label="Threshold", variable=self.threshold)
-		self.threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
+		# ->Create a slider to adjust the blur threshold
+		self.blur_threshold = tk.IntVar()
+		self.blur_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, resolution = 0.01, orient=tk.HORIZONTAL, label="Threshold", variable=self.threshold)
+		self.blur_threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
+
+		# ->Create a slider to adjust the blur threshold
+		self.glare_threshold = tk.IntVar()
+		self.glare_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, resolution = 0.01, orient=tk.HORIZONTAL, label="Threshold", variable=self.threshold)
+		self.glare_threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
 		
 		# Create a "Process Video" button
-		self.video_button = tk.Button(self.button_frame3, text="Process Video", command=print("hello"))
+		self.video_button = tk.Button(self.button_frame3, text="Process Video", command=self.process_images)
 		self.video_button.pack(side=tk.TOP, padx=10, pady=10)
 		
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------      
@@ -146,7 +151,7 @@ class ImageGUI:
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Function to Process video from the images and display it 
 	def process_images(self):
-		generate()
+		generate(self.blur_threshold, self.glare_threshold)
 	
 	
 

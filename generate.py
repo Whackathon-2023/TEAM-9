@@ -14,7 +14,7 @@ from read_select_files import *
 
 tf.__version__
 
-def generate():
+def generate(blur_threshold, glare_threshold):
     trained_model = load_model('model/blur/blur_detect.h5') 
     glareCNN = tf.keras.models.load_model('model/glare/glare_detect.h5')
     source_dir = "data2/"
@@ -44,7 +44,7 @@ def generate():
         buffr_blur.append(img)
         score_blur.append(classes)
         name.append(i)
-        if classes[0][0]<0.9: #change blur threshhold here
+        if classes[0][0]<blur_threshold: #change blur threshhold here
             pred_blur.append("blur")
         else:
             pred_blur.append("not blur")
@@ -57,7 +57,7 @@ def generate():
         glare = glareCNN.predict(test_image2/255) #Values in the array scaled from [0,255] -> [0,1]
 
         score_glare.append(glare) 
-        if glare[0][0] <0.6: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
+        if glare[0][0] <glare_threshold: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
             pred_glare.append("glare")
         else:
             pred_glare.append("not glare") 
@@ -68,7 +68,7 @@ def generate():
 
 
     ##generate videos
-    g_rows = transform_to_rows(name, pred_blur)
+    g_rows = transform_to_rows(name, pred_blur, pred_glare)
     filter_files(g_rows, f"{g_file_dir}/time.txt")
     print("filter_finish")
 

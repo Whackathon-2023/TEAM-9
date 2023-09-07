@@ -8,9 +8,7 @@ def filter_files(target_line_numbers, replace_file):
 
     with fileinput.FileInput(filename, inplace=True, backup='.bak') as file:
         for line_number, line in enumerate(file, start=0):
-            # 如果行号在目标列表中，且行不为空
             if line_number in target_line_numbers and line.strip():
-                # 使用字符串的切片将最后一个字符替换为新字符
                 new_line = line[:-2] + '0\n'
             else:
                 new_line = line[:-2] + '1\n'
@@ -18,14 +16,15 @@ def filter_files(target_line_numbers, replace_file):
     os.remove(f"{filename}.bak")
 
 #input are two list
-def transform_to_rows(names, pred_blur):
+def transform_to_rows(names, pred_blur, pred_glare):
     rows = []
     length = len(names)
     assert(length == len(pred_blur))
+    assert(length == len(pred_glare))
     siz = len("destination")
     for i in range(length):
         rowNo = int(names[i][siz:-4])
-        if(pred_blur[i] == "blur"):
+        if(pred_blur[i] == "blur" or pred_glare[i] =="glare"):
             rows.append(rowNo-1)
     return rows
 
