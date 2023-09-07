@@ -12,11 +12,11 @@ from globalVar import *
 from filterImages import *
 from read_select_files import *
 
-tf.__version__
+#tf.__version__
 
-trained_model = load_model('model/blur/blur_detect.h5') 
-glareCNN = tf.keras.models.load_model('model/glare/glare_detect.h5')
-source_dir = "data2/"
+trained_model = load_model('model/blur_detect.h5') 
+glareCNN = tf.keras.models.load_model('model/glare_detect.h5')
+source_dir = f"{g_file_dir}/"
 
 buffr_blur = []
 score_blur = []

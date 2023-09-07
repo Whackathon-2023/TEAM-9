@@ -1,6 +1,9 @@
 ##global variables
 from datetime import datetime
 
+#for the original 
+g_original_dir = "./userdata"
+#for save the sorted images
 g_file_dir = "data2"
 
 g_input_rate = "1/5"

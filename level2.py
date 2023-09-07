@@ -4,7 +4,7 @@ from datetime import datetime
 import shutil
 from globalVar import *
 
-folder_path = "./userdata"
+folder_path = g_original_dir
 
 def custom_sort(a):
     parts = re.split(r'[\\/\\-]', a)
