@@ -48,10 +48,10 @@ class ImageGUI:
 	# Section for input parameters handling
 
 		# ->Create a calendar widget for start date selection
-		self.calendar_start = Calendar(self.button_frame2, selectmode = 'day', year = 2023, month = 9, day = 7)
+		self.calendar_start = Calendar(self.button_frame2, selectmode = 'day', year = 2022, month = 1, day = 1)
 
 		# ->Create a calendar widget for end date selection
-		self.calendar_end = Calendar(self.button_frame2, selectmode = 'day', year = 2023, month = 9, day = 7)
+		self.calendar_end = Calendar(self.button_frame2, selectmode = 'day', year = 2022, month = 2, day = 22)
 
 		# ->Create start time label
 		self.time_picker_start_label = tk.Label(self.button_frame2, text="Start Time")
@@ -59,6 +59,8 @@ class ImageGUI:
 		# ->Create a time picker widget for starting time
 		self.time_picker_start = SpinTimePickerOld(self.button_frame2)
 		self.time_picker_start.addAll(constants.HOURS24)
+		self.time_picker_start.setHours(0)
+		self.time_picker_start.setMinutes(0)
 
 		# ->Create end time label
 		self.time_picker_end_label = tk.Label(self.button_frame2, text="End Time")
@@ -66,7 +68,8 @@ class ImageGUI:
 		# ->Create a time picker widget for ending time
 		self.time_picker_end = SpinTimePickerOld(self.button_frame2)
 		self.time_picker_end.addAll(constants.HOURS24)
-
+		self.time_picker_start.setHours(12)
+		self.time_picker_start.setMinutes(20)
 
 		# ->Pack all the buttons and widgets
 		self.calendar_start.pack(side=tk.LEFT, padx=10, pady=10)
@@ -81,11 +84,13 @@ class ImageGUI:
 
 		# ->Create a slider to adjust the blur threshold
 		self.blur_threshold = tk.IntVar()
+		self.blur_threshold.set(90)
 		self.blur_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, orient=tk.HORIZONTAL, label="Threshold", variable=self.blur_threshold)
 		self.blur_threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
 
 		# ->Create a slider to adjust the blur threshold
 		self.glare_threshold = tk.IntVar()
+		self.glare_threshold.set(60)
 		self.glare_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, orient=tk.HORIZONTAL, label="Threshold", variable=self.glare_threshold)
 		self.glare_threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
 		
@@ -153,11 +158,15 @@ class ImageGUI:
 	def process_images(self):
 		generate(self.blur_threshold, self.glare_threshold)
 
+		def loop(e):
+			videoplayer.play()
+
 		videoplayer = TkinterVideo(master=self.video_frame, scaled=True)
 		videoplayer.load(r"video.mp4")
-		videoplayer.pack(expand=True, fill="both")
-		videoplayer.play(side=tk.TOP, padx=10, pady=10)
+		videoplayer.pack(side=tk.TOP, padx=10, pady=10, expand=True, fill="both")
+		videoplayer.play()
 	
+		videoplayer.bind("<<Ended>>", loop)
 	
 
 
