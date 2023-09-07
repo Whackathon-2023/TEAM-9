@@ -81,12 +81,12 @@ class ImageGUI:
 
 		# ->Create a slider to adjust the blur threshold
 		self.blur_threshold = tk.IntVar()
-		self.blur_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, resolution = 0.01, orient=tk.HORIZONTAL, label="Threshold", variable=self.blur_threshold)
+		self.blur_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, orient=tk.HORIZONTAL, label="Threshold", variable=self.blur_threshold)
 		self.blur_threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
 
 		# ->Create a slider to adjust the blur threshold
 		self.glare_threshold = tk.IntVar()
-		self.glare_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, resolution = 0.01, orient=tk.HORIZONTAL, label="Threshold", variable=self.glare_threshold)
+		self.glare_threshold_scale = tk.Scale(self.button_frame3, from_=1, to=100, digits = 3, orient=tk.HORIZONTAL, label="Threshold", variable=self.glare_threshold)
 		self.glare_threshold_scale.pack(side=tk.TOP, padx=10, pady=10)
 		
 		# Create a "Process Video" button

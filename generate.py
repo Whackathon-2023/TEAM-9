@@ -44,7 +44,7 @@ def generate(blur_threshold, glare_threshold):
         buffr_blur.append(img)
         score_blur.append(classes)
         name.append(i)
-        if classes[0][0]<int(blur_threshold)/100: #change blur threshhold here
+        if classes[0][0]<int(blur_threshold.get())/100: #change blur threshhold here
             pred_blur.append("blur")
         else:
             pred_blur.append("not blur")
@@ -57,7 +57,7 @@ def generate(blur_threshold, glare_threshold):
         glare = glareCNN.predict(test_image2/255) #Values in the array scaled from [0,255] -> [0,1]
 
         score_glare.append(glare) 
-        if glare[0][0] <int(glare_threshold)/100: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
+        if glare[0][0] <int(glare_threshold.get())/100: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
             pred_glare.append("glare")
         else:
             pred_glare.append("not glare") 
