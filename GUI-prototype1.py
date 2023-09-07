@@ -8,7 +8,7 @@ from globalVar import *
 from readdir import *
 from tktimepicker import constants
 from generate import *
-#from tkVideoPlayer import TkinterVideo
+from tkVideoPlayer import TkinterVideo
 
 # ->directory for images
 folder_path = "./userdata"
@@ -152,6 +152,11 @@ class ImageGUI:
 #Function to Process video from the images and display it 
 	def process_images(self):
 		generate(self.blur_threshold, self.glare_threshold)
+
+		videoplayer = TkinterVideo(master=self.video_frame, scaled=True)
+		videoplayer.load(r"video.mp4")
+		videoplayer.pack(expand=True, fill="both")
+		videoplayer.play(side=tk.TOP, padx=10, pady=10)
 	
 	
 
