@@ -1,3 +1,4 @@
 tkTimePicker
 tkcalendar
 tkVideoPlayer
+tensorflow
