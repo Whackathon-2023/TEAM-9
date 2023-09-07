@@ -59,8 +59,6 @@ class ImageGUI:
 		# ->Create a time picker widget for starting time
 		self.time_picker_start = SpinTimePickerOld(self.button_frame2)
 		self.time_picker_start.addAll(constants.HOURS24)
-		self.time_picker_start.setHours(0)
-		self.time_picker_start.setMinutes(0)
 
 		# ->Create end time label
 		self.time_picker_end_label = tk.Label(self.button_frame2, text="End Time")
@@ -68,8 +66,6 @@ class ImageGUI:
 		# ->Create a time picker widget for ending time
 		self.time_picker_end = SpinTimePickerOld(self.button_frame2)
 		self.time_picker_end.addAll(constants.HOURS24)
-		self.time_picker_start.setHours(12)
-		self.time_picker_start.setMinutes(20)
 
 		# ->Pack all the buttons and widgets
 		self.calendar_start.pack(side=tk.LEFT, padx=10, pady=10)
