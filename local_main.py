@@ -2,6 +2,10 @@ from globalVar import *
 from read_select_files import *
 from filterImages import *
 
+for i in os.listdir("data2/"):
+    print(i)
+
+
 nameL = ["destination1", "destination13"]
 pred_blurL = ["blur", "blur"]
 g_rows = transform_to_rows(nameL, pred_blurL)

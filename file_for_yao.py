@@ -31,6 +31,8 @@ name=[]
 
 image_array=[]
 for i in os.listdir(source_dir):
+    if not i.startswith("destination"):
+        continue
 
     #blur check 
     img = tf.keras.preprocessing.image.load_img(source_dir+i,target_size = (128,128))
