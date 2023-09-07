@@ -2,11 +2,8 @@ from globalVar import *
 from read_select_files import *
 from filterImages import *
 
-for i in os.listdir("data2/"):
-    print(i)
 
-
-nameL = ["destination1", "destination13"]
+nameL = ["destination1.jpg", "destination13.jpg"]
 pred_blurL = ["blur", "blur"]
 g_rows = transform_to_rows(nameL, pred_blurL)
 filter_files(g_rows, f"{g_file_dir}/time.txt")

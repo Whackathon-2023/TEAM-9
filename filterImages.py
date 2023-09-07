@@ -24,7 +24,7 @@ def transform_to_rows(names, pred_blur):
     assert(length == len(pred_blur))
     siz = len("destination")
     for i in range(length):
-        rowNo = int(names[i][siz :])
+        rowNo = int(names[i][siz:-4])
         if(pred_blur[i] == "blur"):
             rows.append(rowNo-1)
     return rows
