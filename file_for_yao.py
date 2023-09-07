@@ -14,8 +14,8 @@ from read_select_files import *
 
 #tf.__version__
 
-trained_model = load_model('model/blur_detect.h5') 
-glareCNN = tf.keras.models.load_model('model/glare_detect.h5')
+trained_model = load_model(g_blur_model) 
+glareCNN = tf.keras.models.load_model(g_glare_model)
 source_dir = f"{g_file_dir}/"
 
 buffr_blur = []
@@ -30,6 +30,10 @@ score_glare=[]
 name=[]
 
 image_array=[]
+
+glare_points = []
+blur_points = []
+
 for i in os.listdir(source_dir):
     if not i.startswith("destination"):
         continue
@@ -43,7 +47,8 @@ for i in os.listdir(source_dir):
     buffr_blur.append(img)
     score_blur.append(classes)
     name.append(i)
-    if classes[0][0]<0.9: #change blur threshhold here
+    blur_points.append(classes[0][0])
+    if classes[0][0] < g_threshold_blur: 
         pred_blur.append("blur")
     else:
         pred_blur.append("not blur")
@@ -56,7 +61,8 @@ for i in os.listdir(source_dir):
     glare = glareCNN.predict(test_image2/255) #Values in the array scaled from [0,255] -> [0,1]
 
     score_glare.append(glare) 
-    if glare[0][0] <0.6: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
+    glare_points.append(glare[0][0])
+    if glare[0][0] < g_threshold_glare: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
         pred_glare.append("glare")
     else:
         pred_glare.append("not glare") 
@@ -66,8 +72,14 @@ for k in range(len(name)):
     image_array.append([name[k],pred_blur[k],pred_glare[k]])
 
 
+#output the images
+with open("quality.txt","w") as writer:
+    for k in range(len(name)):
+        writer.write(f"{name[k]},blur:{blur_points[k]},glare:{glare_points[k]}\n")
+    
+
 ##generate videos
-g_rows = transform_to_rows(name, pred_blur)
+g_rows = transform_to_rows(name, pred_blur, pred_glare)
 filter_files(g_rows, f"{g_file_dir}/time.txt")
 print("filter_finish")
 

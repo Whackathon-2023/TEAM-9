@@ -18,15 +18,17 @@ def filter_files(target_line_numbers, replace_file):
     os.remove(f"{filename}.bak")
 
 #input are two list
-def transform_to_rows(names, pred_blur):
+def transform_to_rows(names, pred_blur, pred_glare):
     rows = []
     length = len(names)
     assert(length == len(pred_blur))
+    assert(length == len(pred_glare))
     siz = len("destination")
     for i in range(length):
         rowNo = int(names[i][siz:-4])
-        if(pred_blur[i] == "blur"):
+        if(pred_blur[i] == "blur" or pred_glare[i] == "glare"):
             rows.append(rowNo-1)
+            
     return rows
 
 
