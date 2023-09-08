@@ -16,21 +16,17 @@ def binary_search(datetimelist, target):
     while left <= right:
         mid = left + (right - left) // 2
 
-        # 如果目标值等于中间值，返回中间索引
         if datetimelist[mid]== target:
             return mid
 
-        # 如果目标值小于中间值，继续在左半部分搜索
         elif datetimelist[mid] > target:
             isRight = True
             right = mid - 1
 
-        # 如果目标值大于中间值，继续在右半部分搜索
         else:
             isRight = False
             left = mid + 1
 
-    # 如果目标值不在数组中，返回-1表示未找到
     if isRight:
         return right+1
     return left

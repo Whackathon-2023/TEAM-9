@@ -6,6 +6,7 @@ import os
 import numpy as np
 from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
+from hist_check import *
 
 #yao
 from globalVar import * 
@@ -34,33 +35,35 @@ def generate(blur_threshold, glare_threshold):
     for i in os.listdir(source_dir):
         if not i.startswith("destination"):
             continue
-
-        #blur check 
-        img = tf.keras.preprocessing.image.load_img(source_dir+i,target_size = (128,128))
-        x = tf.keras.preprocessing.image.img_to_array(img)
-        x = np.expand_dims(x, axis=0)
         
-        classes = trained_model.predict(x/255)
-        buffr_blur.append(img)
-        score_blur.append(classes)
-        name.append(i)
-        if classes[0][0]<int(blur_threshold.get())/100: #change blur threshhold here
-            pred_blur.append("blur")
-        else:
-            pred_blur.append("not blur")
+        valid = validate(source_dir+i)
+        if valid == "good":
+            #blur check 
+            img = tf.keras.preprocessing.image.load_img(source_dir+i,target_size = (128,128))
+            x = tf.keras.preprocessing.image.img_to_array(img)
+            x = np.expand_dims(x, axis=0)
+            
+            classes = trained_model.predict(x/255)
+            buffr_blur.append(img)
+            score_blur.append(classes)
+            name.append(i)
+            if classes[0][0]<int(blur_threshold.get())/100: #change blur threshhold here
+                pred_blur.append("blur")
+            else:
+                pred_blur.append("not blur")
 
 
-        #glare check    
-        test_image1 = tf.keras.preprocessing.image.load_img(source_dir+i, target_size = (64,64))
-        test_image2 = tf.keras.preprocessing.image.img_to_array(test_image1) #convert PIL image to array
-        test_image2 = np.expand_dims(test_image2, axis = 0) #expand image dimensions to make it compatible with CNN input
-        glare = glareCNN.predict(test_image2/255) #Values in the array scaled from [0,255] -> [0,1]
+            #glare check    
+            test_image1 = tf.keras.preprocessing.image.load_img(source_dir+i, target_size = (64,64))
+            test_image2 = tf.keras.preprocessing.image.img_to_array(test_image1) #convert PIL image to array
+            test_image2 = np.expand_dims(test_image2, axis = 0) #expand image dimensions to make it compatible with CNN input
+            glare = glareCNN.predict(test_image2/255) #Values in the array scaled from [0,255] -> [0,1]
 
-        score_glare.append(glare) 
-        if glare[0][0] <int(glare_threshold.get())/100: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
-            pred_glare.append("glare")
-        else:
-            pred_glare.append("not glare") 
+            score_glare.append(glare) 
+            if glare[0][0] <int(glare_threshold.get())/100: #CNN model refers to 0 as "glare" and 1 as "not glare", applying a threshold for both cases.Change threshhold here
+                pred_glare.append("glare")
+            else:
+                pred_glare.append("not glare") 
 
 
     for k in range(len(name)):
